@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OpenCode HUD command center for monitoring Tukar project status, activity logs, and token metrics in real time.">
+    <meta property="og:title" content="OPENCODE HUD | COMMAND CENTER">
+    <meta property="og:description" content="Operational dashboard for Tukar system activity, metrics, and command interface.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tukar.local/dashboard">
+    <meta property="og:image" content="https://tukar.local/dashboard-preview.png">
+    <title>OPENCODE HUD | COMMAND CENTER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="hud-body">
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+
+    <header class="hud-header">
+        <div class="brand glitch-wrapper">
+            <span class="status-dot"></span>
+            <h1 class="glitch" data-text="SYSTEM-LEVEL: DEWA">SYSTEM-LEVEL: DEWA</h1>
+        </div>
+        <div class="system-stats">
+            <span class="stat-item">PROJECT: <span class="val">TUKAR</span></span>
+            <span class="stat-item">STATUS: <span class="val pulse">ACTIVE</span></span>
+            <span class="stat-item">CLOCK: <span id="clock" class="val">--:--:--</span></span>
+        </div>
+    </header>
+
+    <main class="hud-grid">
+        <section class="widget primary-view">
+            <div class="widget-header">
+                <h2>CORE_TERMINAL</h2>
+                <div class="filter-controls">
+                    <button class="filter-btn active" data-filter="all">ALL</button>
+                    <button class="filter-btn" data-filter="info">INFO</button>
+                    <button class="filter-btn" data-filter="error">ERROR</button>
+                </div>
+            </div>
+            <div class="terminal-frame">
+                <div id="logs" class="log-stream">
+                    <p class="log-entry system">> Initializing OpenCode Web Interface...</p>
+                    <p class="log-entry success">> Authentication Disabled | Security Level: ALPHA</p>
+                    <p class="log-entry info">> Interface: Futuristic HUD Loaded.</p>
+                </div>
+            </div>
+        </section>
+
+        <aside class="side-panel">
+            <section class="widget token-monitor">
+                <div class="widget-header">
+                    <h2>TOKEN_METRICS</h2>
+                    <span class="tag">SUGGESTION_2</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <label>INPUT_LOAD</label>
+                        <div class="progress-bar">
+                            <div class="fill" style="width: 42%;"></div>
+                        </div>
+                        <span class="value">42.8k</span>
+                    </div>
+                    <div class="metric-card">
+                        <label>OUTPUT_GEN</label>
+                        <div class="progress-bar">
+                            <div class="fill alert" style="width: 78%;"></div>
+                        </div>
+                        <span class="value">12.2k</span>
+                    </div>
+                    <div class="metric-card">
+                        <label>QUOTA_REMAIN</label>
+                        <div class="progress-bar">
+                            <div class="fill success" style="width: 95%;"></div>
+                        </div>
+                        <span class="value">95.1%</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="widget account-status">
+                <div class="widget-header">
+                    <h2>ACTIVE_ACCOUNTS</h2>
+                </div>
+                <div class="account-list">
+                    <div class="acc-item active">
+                        <span class="acc-name">Account_01_PRO</span>
+                        <span class="badge">ACTIVE</span>
+                    </div>
+                    <div class="acc-item">
+                        <span class="acc-name">Account_02_ROTATED</span>
+                        <span class="badge gray">IDLE</span>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </main>
+
+    <footer class="hud-footer">
+        <div class="footer-left">
+            <span>AUTO_REFRESH: <span class="success">ENABLED</span></span>
+        </div>
+        <div class="footer-right">
+            <span>V_1.0.4.ALPHA</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

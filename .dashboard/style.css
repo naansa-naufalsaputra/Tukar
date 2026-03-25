@@ -1,0 +1,338 @@
+:root {
+    --bg-color: #050505;
+    --surface-color: #0a0a0a;
+    --accent-color: #affc41;
+    /* Slime Green */
+    --alert-color: #ff5f1f;
+    /* Signal Orange */
+    --info-color: #00e0ff;
+    --border-color: rgba(175, 252, 65, 0.2);
+    --text-primary: #ffffff;
+    --text-dim: #888888;
+    --font-mono: 'JetBrains Mono', 'Roboto Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.hud-body {
+    background: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Overlays */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+            rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0.1;
+}
+
+.noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.05;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+/* Header */
+.hud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.brand h1 {
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px rgba(175, 252, 65, 0.5);
+}
+
+.system-stats {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.75rem;
+}
+
+.val {
+    color: var(--accent-color);
+}
+
+.val.pulse {
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* Layout Grid */
+.hud-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    flex: 1;
+    gap: 1px;
+    background: var(--border-color);
+}
+
+.widget {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid var(--accent-color);
+    padding-left: 1rem;
+}
+
+.widget-header h2 {
+    font-size: 0.85rem;
+    letter-spacing: 0.1rem;
+}
+
+.tag {
+    font-size: 0.6rem;
+    background: var(--accent-color);
+    color: black;
+    padding: 2px 6px;
+}
+
+/* Glitch Effect */
+.glitch-wrapper {
+    position: relative;
+}
+
+.glitch {
+    position: relative;
+    color: var(--accent-color);
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.glitch::before {
+    color: var(--info-color);
+    z-index: -1;
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    color: var(--alert-color);
+    z-index: -2;
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0% {
+        clip: rect(20px, 9999px, 15px, 0);
+        transform: skew(0.5deg);
+    }
+
+    20% {
+        clip: rect(40px, 9999px, 50px, 0);
+        transform: skew(1deg);
+    }
+
+    40% {
+        clip: rect(10px, 9999px, 30px, 0);
+        transform: skew(-0.5deg);
+    }
+
+    60% {
+        clip: rect(60px, 9999px, 80px, 0);
+        transform: skew(0.5deg);
+    }
+
+    80% {
+        clip: rect(30px, 9999px, 20px, 0);
+        transform: skew(1deg);
+    }
+
+    100% {
+        clip: rect(50px, 9999px, 40px, 0);
+        transform: skew(-0.5deg);
+    }
+}
+
+@keyframes glitch-anim-2 {
+    0% {
+        clip: rect(15px, 9999px, 25px, 0);
+        transform: skew(-0.5deg);
+    }
+
+    25% {
+        clip: rect(35px, 9999px, 45px, 0);
+        transform: skew(0.5deg);
+    }
+
+    50% {
+        clip: rect(5px, 9999px, 15px, 0);
+        transform: skew(1deg);
+    }
+
+    75% {
+        clip: rect(55px, 9999px, 65px, 0);
+        transform: skew(-0.5deg);
+    }
+
+    100% {
+        clip: rect(25px, 9999px, 35px, 0);
+        transform: skew(0.5deg);
+    }
+}
+
+/* Filter Controls */
+.filter-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    padding: 2px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--text-primary);
+}
+
+.filter-btn.active {
+    background: var(--accent-color);
+    color: black;
+    border-color: var(--accent-color);
+}
+
+/* Terminal Area */
+.terminal-frame {
+    flex: 1;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    overflow-y: auto;
+}
+
+.log-entry.system {
+    color: var(--text-dim);
+}
+
+.log-entry.success {
+    color: var(--accent-color);
+}
+
+.log-entry.info {
+    color: var(--info-color);
+}
+
+/* Side Panel Widgets */
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.metrics-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.metric-card label {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.progress-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 0.4rem;
+}
+
+.fill {
+    height: 100%;
+    background: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+.fill.alert {
+    background: var(--alert-color);
+    box-shadow: 0 0 10px var(--alert-color);
+}
+
+.fill.success {
+    background: var(--info-color);
+    box-shadow: 0 0 10px var(--info-color);
+}
+
+.metric-card .value {
+    font-size: 0.9rem;
+}
+
+/* Footer */
+.hud-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 2rem;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border-color);
+}
+
+.success {
+    color: var(--accent-color);
+}

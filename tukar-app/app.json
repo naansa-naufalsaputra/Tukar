@@ -1,0 +1,60 @@
+{
+  "expo": {
+    "name": "Tukar App - Smart Financial Assistant",
+    "slug": "tukar-app",
+    "description": "Smart financial assistant to track your expenses and manage your wealth.",
+    "version": "1.0.0",
+    "scheme": "tukar",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "jsEngine": "hermes",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f8fafc"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "config": {
+        "usesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#f8fafc"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.anonymous.tukarapp"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font",
+      "@react-native-community/datetimepicker",
+      "expo-web-browser",
+      "expo-secure-store",
+      "@sentry/react-native",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "networkSecurityConfig": "./network-security-config.xml"
+          }
+        }
+      ],
+      [
+        "expo-dynamic-app-icon",
+        {
+          "icons": {
+            "light": "./assets/icons/icon-light.png",
+            "dark": "./assets/icons/icon-dark.png",
+            "gold": "./assets/icons/icon-gold.png"
+          }
+        }
+      ]
+    ]
+  }
+}

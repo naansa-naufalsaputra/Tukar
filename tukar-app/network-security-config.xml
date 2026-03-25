@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config>
+        <domain includeSubdomains="true">mxdflyyybzzfkinygzxl.supabase.co</domain>
+        <pin-set expiration="2027-01-01">
+            <!-- Pin for mxdflyyybzzfkinygzxl.supabase.co -->
+            <pin digest="SHA-256">9H1I8j8p3j0/T8v7G9v8v7G9v8v7G9v8v7G9v8v7G9v=</pin>
+            <!-- Backup Pin -->
+            <pin digest="SHA-256">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>

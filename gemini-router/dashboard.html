@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gemini Router Monitor Dashboard for checking API endpoints and status." />
+  <meta property="og:title" content="Gemini Router Monitor" />
+  <meta property="og:description" content="Gemini Router Monitor Dashboard for checking API endpoints and status." />
+  <meta property="og:type" content="website" />
+  <title>Gemini Router Monitor</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #0b1020; color: #e5e7eb; }
+    h1 { margin: 0 0 12px; }
+    .card { background: #121933; border: 1px solid #22305f; border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+    .ok { color: #22c55e; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border-bottom: 1px solid #22305f; padding: 8px; text-align: left; }
+    button { background: #2563eb; color: white; border: 0; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+    code { color: #93c5fd; }
+  </style>
+</head>
+<body>
+  <h1>Gemini Router Monitor</h1>
+  <div class="card">
+    <div>Status: <span id="status">-</span></div>
+    <div>Default Model: <code id="defaultModel">-</code></div>
+    <div>Model Order: <code id="modelOrder">-</code></div>
+    <div>Updated: <span id="updatedAt">-</span></div>
+    <br />
+    <button id="refreshBtn" type="button">Refresh</button>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>Type</th>
+          <th>Cooldown (ms)</th>
+          <th>Attempts</th>
+          <th>Failures</th>
+        </tr>
+      </thead>
+      <tbody id="providersBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    async function refresh() {
+      try {
+        const res = await fetch('http://127.0.0.1:8787/health');
+        const data = await res.json();
+        document.getElementById('status').textContent = data.status || '-';
+        document.getElementById('status').className = data.status === 'ok' ? 'ok' : '';
+        document.getElementById('defaultModel').textContent = data.defaultModel || '-';
+        document.getElementById('modelOrder').textContent = Array.isArray(data.modelOrder) ? data.modelOrder.join(', ') : '-';
+        document.getElementById('updatedAt').textContent = new Date().toLocaleString();
+
+        const body = document.getElementById('providersBody');
+        body.innerHTML = '';
+        for (const p of (data.providers || [])) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${p.name}</td><td>${p.type}</td><td>${p.cooldownRemainingMs}</td><td>${p.totalAttempts}</td><td>${p.totalFailures}</td>`;
+          body.appendChild(tr);
+        }
+      } catch {
+        document.getElementById('status').textContent = 'offline';
+      }
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', refresh);
+    refresh();
+    setInterval(refresh, 4000);
+  </script>
+</body>
+</html>
