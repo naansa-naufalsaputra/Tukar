@@ -1,0 +1,36 @@
+name: Antigravity Code Assessment
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  master-checklist:
+    name: Run Checklist
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Application Dependencies
+        run: |
+          # Install dependencies locally so testing scripts don't fail
+          cd tukar-app && (npm ci || npm install)
+          cd ../gemini-router && (npm ci || npm install)
+        continue-on-error: true
+
+      - name: Run Master Checklist (Security, Lint, SEO, UX)
+        run: python .agent/scripts/checklist.py .
